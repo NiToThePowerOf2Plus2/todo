@@ -8,27 +8,36 @@ export default function Board(){
         //here better condition (i.e. if input is only spaces) needed! / solution here using REGEX
         if(input.value === undefined || !input.value.replace(/\s/g, '').length){
             alert("enter text first!");
+        }else{ //else needed to prevent adding empty strings
+            //adding input to ol
+            //creating new li
+            let item = document.createElement("li");
+            item.setAttribute("class","item");
+            item.appendChild(document.createTextNode(input.value));
+            //getting ol
+            let list = document.getElementById("list")
+            list.appendChild(item);
+            //creating delete and todo button
+            //todo
+            let todoBtn = document.createElement("button");
+            todoBtn.setAttribute("id","todo-btn");
+            todoBtn.appendChild(document.createTextNode("todo"));
+            //delete
+            let delBtn = document.createElement("button");
+            delBtn.setAttribute("id","del-btn");
+            delBtn.appendChild(document.createTextNode("delete"));
+            //add buttons to item li
+            item.appendChild(todoBtn);
+            item.appendChild(delBtn);
+            //setting onclick
+            delBtn.onclick = function(){del(delBtn.parentNode)};
+            //clear input field
+            input.value = "";
         }
-        //adding input to ol
-        //creating new li
-        let item = document.createElement("li");
-        item.setAttribute("class","item");
-        item.appendChild(document.createTextNode(input.value));
-        //getting ol
+    }
+    function del(item){
         let list = document.getElementById("list")
-        list.appendChild(item);
-        //creating delete and archiv button
-        let delBtn = document.createElement("button");
-        delBtn.setAttribute("id","del-btn");
-        delBtn.appendChild(document.createTextNode("delete"));
-        let archBtn = document.createElement("button");
-        archBtn.setAttribute("id","arch-btn");
-        archBtn.appendChild(document.createTextNode("archive"));
-        //add buttons to item li
-        item.appendChild(delBtn);
-        item.appendChild(archBtn);
-        //clear input field
-        input.value = "";
+        list.removeChild(item);
     }
     return(
         <div id="main-container">
