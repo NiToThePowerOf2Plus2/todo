@@ -15,11 +15,16 @@ function App() {
       //creating new li
       let item = document.createElement("li");
       item.setAttribute("class","item");
-      item.appendChild(document.createTextNode(input.value));
+      //creating text : had to create new element to make it child of item
+      let text = document.createElement("p");
+      text.setAttribute("id","text");
+      text.appendChild(document.createTextNode(input.value));
+      //add to item 
+      item.appendChild(text);
       //getting ol
       let todoList = document.getElementById("todo-list")
       todoList.appendChild(item);
-      //creating delete and done button
+      //creating delete and done button and edit
       //done
       let doneBtn = document.createElement("button");
       doneBtn.setAttribute("id","done-btn");
@@ -28,19 +33,25 @@ function App() {
       let delBtn = document.createElement("button");
       delBtn.setAttribute("id","del-btn");
       delBtn.appendChild(document.createTextNode("❌"));
+      //edit
+      let editBtn = document.createElement("button");
+      editBtn.setAttribute("id","edit-btn");
+      editBtn.appendChild(document.createTextNode("edit"));
       //add buttons to item li
       item.appendChild(doneBtn);
+      item.appendChild(editBtn);
       item.appendChild(delBtn);
       //setting onclick
       delBtn.onclick = function(){del(item)};
       doneBtn.onclick = function(){addArchive(item)};
+      editBtn.onclick = function(){edit(item)};
       //clear input field
       input.value = "";
       
     }
   }
   function del(item){
-    if(item.parentNode !== document.getElementById("archive-list")){
+    if(item.parentNode !== document.getElementById("archive-list") && toDel){
       addArchive(item); //!!! else helped by adding to archive cause without else it would also delete the item after adding it to archive.
       //i expected that the item will not get deleted from todo after getting added to archive but the way appendChild() works (look at explaination at beginning ) saved the functionality
       //adding red color as sign for deleted before doing it
@@ -49,12 +60,21 @@ function App() {
       item.parentNode.removeChild(item);
     }
   }
+  let toDel = true; //without this, the element will be added to archive after pressing on "edit"
+  function edit(item){
+    toDel = false;
+    let inputToEdit = item.children[0];
+    del(item);
+    let input = document.getElementById("input");
+    input.value = inputToEdit.innerHTML;
+    toDel = true; //set back to true to keep del() working right
+  }
   function readd(item){
     let todoList = document.getElementById("todo-list")
     todoList.appendChild(item);
-    //delete old buttons
-    item.removeChild(item.children[0]);
-    item.removeChild(item.children[0]);
+    //delete old buttons. 0 node is input-text
+    item.removeChild(item.children[1]);
+    item.removeChild(item.children[1]);
     item.setAttribute("style","background-color:none;"); //deleting background color 
     //create new buttons
     //add done btn
@@ -63,12 +83,17 @@ function App() {
     doneBtn.appendChild(document.createTextNode("👍"));
     doneBtn.onclick = function(){addArchive(item)}; // set onclick
     item.appendChild(doneBtn); // add to parent (item)
+    //add edit btn
+    let editBtn = document.createElement("button"); //create
+    editBtn.setAttribute("id","edit-btn");
+    editBtn.appendChild(document.createTextNode("edit"));
+    editBtn.onclick = function(){edit(item)}; // set onclick
+    item.appendChild(editBtn); // add to parent (item)
     //add del btn
     let delBtn = document.createElement("button");
     delBtn.setAttribute("id","del-btn");
     delBtn.appendChild(document.createTextNode("❌"));
     delBtn.onclick = function(){del(item)};
-    //add button to item li
     item.appendChild(delBtn);
   }
   function addArchive(item){
@@ -79,9 +104,10 @@ function App() {
     let archList = document.getElementById("archive-list")
     archList.appendChild(item);
     //delete all buttons to add new ones
-    //written two times cause second button will become at first postition after deleting the first button. 
-    item.removeChild(item.children[0]);
-    item.removeChild(item.children[0]);
+    //written three times cause second and third button will become at first postition after deleting the first and second button. 
+    item.removeChild(item.children[1]);
+    item.removeChild(item.children[1]);
+    item.removeChild(item.children[1]);
     //make new buttons.....
     //add redo btn
     let redoBtn = document.createElement("button"); //create
