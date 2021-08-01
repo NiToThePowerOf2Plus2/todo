@@ -18,96 +18,93 @@ function App() {
       item.setAttribute("class","item");
       item.appendChild(document.createTextNode(input.value));
       //getting ol
-      let boardList = document.getElementById("board-list")
-      boardList.appendChild(item);
-      //creating delete and todo button
-      //todo
-      let todoBtn = document.createElement("button");
-      todoBtn.setAttribute("id","todo-btn");
-      todoBtn.appendChild(document.createTextNode("todo"));
+      let todoList = document.getElementById("todo-list")
+      todoList.appendChild(item);
+      //creating delete and done button
+      //done
+      let doneBtn = document.createElement("button");
+      doneBtn.setAttribute("id","done-btn");
+      doneBtn.appendChild(document.createTextNode("done"));
       //delete
       let delBtn = document.createElement("button");
       delBtn.setAttribute("id","del-btn");
       delBtn.appendChild(document.createTextNode("delete"));
       //add buttons to item li
-      item.appendChild(todoBtn);
+      item.appendChild(doneBtn);
       item.appendChild(delBtn);
       //setting onclick
-      delBtn.onclick = function(){del(delBtn.parentNode)};
-      todoBtn.onclick = function(){addTodo(item)};
+      delBtn.onclick = function(){del(item)};
+      doneBtn.onclick = function(){addArchive(item)};
       //clear input field
       input.value = "";
     }
   }
   function del(item){
-    item.parentNode.removeChild(item);
     if(item.parentNode !== document.getElementById("archive-list")){
-      addArchive(item); //!!! item is keeping his own old parent, why????. 2.problem: index of btns: solution to delete all buttons by moving and create new needed buttons.
-      console.log("deleted")
+      addArchive(item); //!!! else helped by adding to archive cause without else it would also delete the item after adding it to archive.
+      //i expected that the item will not get deleted from todo after getting added to archive but the way appendChild() works (look at explaination at beginning ) saved the functionality
+      console.log("deleted item!")
+    }else{
+      item.parentNode.removeChild(item);
     }
   }
-  function addTodo(item){
-    //adding item to ol
-    //getting ol
-    let todoList = document.getElementById("todo-list")
-    todoList.appendChild(item);
-    
-    //changing todo-btn to done-btn
-    item.removeChild(item.children[0]); //delete todo button
-    let newButton = document.createElement("button"); //create new button 
-    newButton.setAttribute("id","done-btn");
-    newButton.appendChild(document.createTextNode("done"));
-    item.appendChild(newButton); //add new button "done" to added item
-    //setting onclick done-btn
-    newButton.onclick = function(){addArchive(newButton.parentNode)}
-  }
-  //stupid! the only difference here is the child-index. i could use the exisiting addTodo() itself but changing the button is needed
   function readd(item){
     let todoList = document.getElementById("todo-list")
     todoList.appendChild(item);
-    //changing redo-btn to done-btn
-    item.removeChild(item.children[1]); //delete redo button
-    let newButton = document.createElement("button"); //create new button 
-    newButton.setAttribute("id","done-btn");
-    newButton.appendChild(document.createTextNode("done"));
-    item.appendChild(newButton); //add new button "done" to added item
-    //setting onclick done-btn
-    newButton.onclick = function(){addArchive(newButton.parentNode)}
+    //delete old buttons
+    item.removeChild(item.children[0]);
+    item.removeChild(item.children[0]);
+    //create new buttons
+    //add done btn
+    let doneBtn = document.createElement("button"); //create
+    doneBtn.setAttribute("id","done-btn");
+    doneBtn.appendChild(document.createTextNode("done"));
+    doneBtn.onclick = function(){addArchive(item)}; // set onclick
+    item.appendChild(doneBtn); // add to parent (item)
+    //add del btn
+    let delBtn = document.createElement("button");
+    delBtn.setAttribute("id","del-btn");
+    delBtn.appendChild(document.createTextNode("delete"));
+    delBtn.onclick = function(){del(item)};
+    //add button to item li
+    item.appendChild(delBtn);
   }
   function addArchive(item){
     //adding item to ol
     //getting ol
     let archList = document.getElementById("archive-list")
     archList.appendChild(item);
-    item.removeChild(item.children[1]); //delete done button
-    //redo btn
-    let newButton = document.createElement("button"); //create new button 
-    newButton.setAttribute("id","redo-btn");
-    newButton.appendChild(document.createTextNode("redo"));
-    item.appendChild(newButton); //add new button "done" to added item
-    //setting onclick done-btn
-    newButton.onclick = function(){readd(newButton.parentNode)}
+    //delete all buttons to add new ones
+    //written two times cause second button will become at first postition after deleting the first button. 
+    item.removeChild(item.children[0]);
+    item.removeChild(item.children[0]);
+    //make new buttons.....
+    //add redo btn
+    let redoBtn = document.createElement("button"); //create
+    redoBtn.setAttribute("id","redo-btn"); //set id
+    redoBtn.appendChild(document.createTextNode("redo")); //add text "redo"
+    redoBtn.onclick = function(){readd(item)}; // set onclick
+    item.appendChild(redoBtn); // add to parent (item)
+    //add del btn
+    let delBtn = document.createElement("button");
+    delBtn.setAttribute("id","del-btn");
+    delBtn.appendChild(document.createTextNode("delete"));
+    delBtn.onclick = function(){del(item)};
+    //add button to item li
+    item.appendChild(delBtn);
   }
   return (
     <div className="main-container">
-      {/* //=======================BOARD=============================== */}
-      <div className="board-container">
-        <h1 id="board-title">BOARD</h1>
-        <div id="board-content-container">
-            <ol id="board-list">
-                
-            </ol>
-        </div>
-        <div id="input-container">
-            <input id="input" type="text" placeholder="what to do🤔"></input>
-            <button id="add-btn" type="button" onClick={add}>add</button>
-        </div>
-      </div>
+      
       {/* //=======================TODO=============================== */}
       <div className="todo-container">
         <h1 id="todo-title">TODO</h1>
         <div id="todo-content-container">
           <ol id="todo-list"></ol>
+        </div>
+        <div id="input-container">
+            <input id="input" type="text" placeholder="what to do🤔"></input>
+            <button id="add-btn" type="button" onClick={add}>add</button>
         </div>
       </div>
       {/* //========================ARCHIVE============================== */}
