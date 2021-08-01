@@ -3,10 +3,11 @@
   top: 0; right: 0; bottom: 0; left: 0;
   background: rgb(255, 255, 255);
   display: grid;
+  grid-template: repeat(3,1fr)/ repeat(4,1fr);
   grid-template-areas: 
-    ". . . . . ."
-    ". . t a . ."
-    ". . . . . ."
+    ". . . ."
+    ". t a ."
+    ". . . ."
   ;
   align-content: center;
 }
@@ -190,3 +191,50 @@
   font-family: 'eraserReg';
   src: url('./fonts/EraserReg.ttf');
 }
+@media (max-width: 700px) {
+  
+  .main-container {
+  
+    margin:10px;
+    grid-template:repeat(2,500px)/ repeat(1,1fr);
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+  .todo-container{
+    margin: 0 auto;
+    grid-row: 1/2;
+    margin-bottom: 10px;
+  }
+  .archive-container{
+    margin: 0 auto;
+    grid-row: 2/3;
+  }
+}
+@media (max-width: 400px) {
+  
+  .main-container {
+  
+    margin:0;
+    grid-template:repeat(2,500px)/ repeat(1,1fr);
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+  .todo-container{
+    margin: 0 auto;
+    grid-row: 1/2;
+    
+  }
+  .archive-container{
+    margin: 0 auto;
+    grid-row: 2/3;
+  }
+}
+
