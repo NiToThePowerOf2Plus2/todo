@@ -10,7 +10,7 @@ function App() {
   const add_e = "➕";
   const del_e = "🗑️"; //💣
   const done_e = "👍🏻"; //👍
-  const edit_e = "✏️"; //🖋
+  const edit_e = "✏️"; 
   const redo_e = "📝";
 
   //appending childern in other places delets the child in its original place, which works fine and is needed in this project
@@ -40,14 +40,17 @@ function App() {
       //done
       let doneBtn = document.createElement("button");
       doneBtn.setAttribute("id","done-btn");
+      doneBtn.setAttribute("title","done");
       doneBtn.appendChild(document.createTextNode(done_e));
       //edit
       let editBtn = document.createElement("button");
       editBtn.setAttribute("id","edit-btn");
+      editBtn.setAttribute("title","edit");
       editBtn.appendChild(document.createTextNode(edit_e));
       //delete
       let delBtn = document.createElement("button");
       delBtn.setAttribute("id","del-btn");
+      delBtn.setAttribute("title","delete");
       delBtn.appendChild(document.createTextNode(del_e));
       //add buttons to item li
       item.appendChild(doneBtn);
@@ -88,11 +91,13 @@ function App() {
     //making buttons
     //ok 
     let ok = document.createElement("button");
-    ok.setAttribute("id"," ok-btn");
+    ok.setAttribute("id","ok-btn");
+    ok.setAttribute("title","ok");
     ok.appendChild(document.createTextNode(ok_e));
     //cancel 
     let cancel = document.createElement("button");
-    cancel.setAttribute("id"," cancel-btn");
+    cancel.setAttribute("id","cancel-btn");
+    cancel.setAttribute("title","cancel");
     cancel.appendChild(document.createTextNode(cancel_e));
     //adding ok and cancel buttons
     item.appendChild(ok);
@@ -113,14 +118,17 @@ function App() {
     //done
     let doneBtn = document.createElement("button");
     doneBtn.setAttribute("id","done-btn");
+    doneBtn.setAttribute("title","done");
     doneBtn.appendChild(document.createTextNode(done_e));
     //edit
     let editBtn = document.createElement("button");
     editBtn.setAttribute("id","edit-btn");
+    editBtn.setAttribute("title","edit");
     editBtn.appendChild(document.createTextNode(edit_e));
     //delete
     let delBtn = document.createElement("button");
     delBtn.setAttribute("id","del-btn");
+    delBtn.setAttribute("title","delete");
     delBtn.appendChild(document.createTextNode(del_e));
     //adding new buttons
     //done
@@ -149,10 +157,12 @@ function App() {
     //re-do
     let redoBtn = document.createElement("button"); //create
     redoBtn.setAttribute("id","redo-btn"); //set id
+    redoBtn.setAttribute("title","re-do");
     redoBtn.appendChild(document.createTextNode(redo_e)); //add text "redo"
     //delete
     let delBtn = document.createElement("button");
     delBtn.setAttribute("id","del-btn");
+    delBtn.setAttribute("title","delete");
     delBtn.appendChild(document.createTextNode(del_e));
     //add new buttons
     //redo btn
@@ -180,14 +190,17 @@ function App() {
       //done
       let doneBtn = document.createElement("button");
       doneBtn.setAttribute("id","done-btn");
+      doneBtn.setAttribute("title","done");
       doneBtn.appendChild(document.createTextNode(done_e));
       //edit
       let editBtn = document.createElement("button");
       editBtn.setAttribute("id","edit-btn");
+      editBtn.setAttribute("title","edit");
       editBtn.appendChild(document.createTextNode(edit_e));
       //delete
       let delBtn = document.createElement("button");
       delBtn.setAttribute("id","del-btn");
+      delBtn.setAttribute("title","delete");
       delBtn.appendChild(document.createTextNode(del_e));
       //adding buttons (which appears usually on todo list) back
       item.appendChild(doneBtn);
@@ -213,14 +226,17 @@ function App() {
     //done
     let doneBtn = document.createElement("button");
     doneBtn.setAttribute("id","done-btn");
+    doneBtn.setAttribute("title","done");
     doneBtn.appendChild(document.createTextNode(done_e));
     //edit
     let editBtn = document.createElement("button");
     editBtn.setAttribute("id","edit-btn");
+    editBtn.setAttribute("title","edit");
     editBtn.appendChild(document.createTextNode(edit_e));
     //delete
     let delBtn = document.createElement("button");
     delBtn.setAttribute("id","del-btn");
+    delBtn.setAttribute("title","delete");
     delBtn.appendChild(document.createTextNode(del_e));
     //re-adding the old children
     item.appendChild(recoverText);
@@ -244,7 +260,7 @@ function App() {
         <div id="input-container">
             <input id="input" type="text" placeholder="what to do🤔!"></input>
             <div id="add-btn-container">
-              <button id="add-btn" type="button" onClick={add}>{add_e}</button>
+              <button title="add new item" id="add-btn" type="button" onClick={add}>{add_e}</button>
             </div>
         </div>
       </div>

@@ -61,7 +61,7 @@
   color:white;
   font-size: 24px;
   display: grid;
-  grid-template-columns: 8fr 1fr 1fr;
+  grid-template-columns: 5fr auto auto auto;
   border-bottom: white solid 2px;
   border-bottom-style: dashed;
   padding: 5px;
@@ -76,6 +76,39 @@
   padding: 0;
   margin-left: 5px;
   font-size: 16px;
+  padding-bottom: 1px;
+}
+#edit-btn{
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  font-family: Roboto,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  padding: 0;
+  margin-left: 5px;
+  font-size: 16px;
+  padding-bottom: 2px;
+}
+#ok-btn{
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  font-family: Roboto,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  padding: 0;
+  margin-left: 5px;
+  font-size: 16px;
+}
+#cancel-btn{
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  font-family: Roboto,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  padding: 0;
+  margin-left: 5px;
+  font-size: 16px;
+  padding-bottom: 1px;
 }
 #done-btn{
   height: 30px;
@@ -87,6 +120,7 @@
   padding-bottom: 4px;
   font-size: 16px;
   margin-left: 5px;
+  padding-bottom: 15px;
 }
 #redo-btn{
   height: 30px;
@@ -96,7 +130,7 @@
   font-weight: bold;
   font-size: 16px;
   margin-left: 5px;
-  padding: 1px;
+  padding-bottom: 5px;
 }
 #input-container{
   grid-row: 3/4;
@@ -115,6 +149,14 @@
   font-family: Roboto,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
 }
+#new-input{
+  width: 85%;
+  height: 50%;
+  padding: 10px;
+  font-size: 17px;
+  font-family: Roboto,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+}
 #add-btn{
   height: 50px;
   width: 50px;
@@ -127,8 +169,14 @@
 #add-btn:active{
   background: white;
 }
+#edit-btn:hover{
+  background: #dddf64;
+}
+#edit-btn:active{
+  background: white;
+}
 #del-btn:hover{
-  background: rgb(167, 167, 167);
+  background: rgb(179, 82, 82);
 }
 #del-btn:active{
   background: white;
@@ -147,6 +195,18 @@
   background: #bac653;
 }
 #redo-btn:active{
+  background: white;
+}
+#ok-btn:hover{
+  background: #bac653;
+}
+#ok-btn:active{
+  background: white;
+}
+#cancel-btn:hover{
+  background: rgb(179, 82, 82);
+}
+#cancel-btn:active{
   background: white;
 }
 .archive-container{
