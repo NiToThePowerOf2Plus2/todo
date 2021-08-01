@@ -57,7 +57,7 @@
   scroll-behavior: smooth;
 }
 .item{
-  font-family: ccryon;
+  font-family: chalk,ccryon,eraserReg,eraserDust;
   color:white;
   font-size: 24px;
   display: grid;
