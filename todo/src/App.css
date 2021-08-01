@@ -1,38 +1,189 @@
-.App {
-  text-align: center;
+.main-container{
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: rgb(255, 255, 255);
+  display: grid;
+  grid-template-areas: 
+    ". . . . . ."
+    ". . t a . ."
+    ". . . . . ."
+  ;
+  align-content: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.todo-container{
+  background:  #56A1DA;
+  width: 350px;
+  height: 500px;
+  grid-area: t;
+  display: grid;
+  grid-template-rows: repeat(3,auto);
+  border-radius: 5%;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#todo-content-container{
+  background: #4a564d;
+  border-radius: 5% 0 0 5%;
+  grid-row: 2/3;
+  width: 90%;
+  height: 350px;
+  margin: 0 auto;
+  border: solid white 1px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#todo-title{
+  font-family: Roboto,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  grid-row: 1/2;
+  margin: auto auto;
+  color:white;
 }
-
-.App-link {
-  color: #61dafb;
+#todo-list{
+  padding: 10px;
+  margin: 0;
+  overflow-y: scroll;
+  height: 330px;
+  scrollbar-color: #fff rgb(54, 54, 54);
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.item{
+  font-family: ccryon;
+  color:white;
+  font-size: 24px;
+  display: grid;
+  grid-template-columns: 8fr 1fr 1fr;
+  border-bottom: white solid 2px;
+  border-bottom-style: dashed;
+  padding: 5px;
+  margin: 0;
+}
+#del-btn{
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  font-family: Roboto,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  padding: 0;
+  margin-left: 5px;
+  font-size: 16px;
+}
+#done-btn{
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  font-family: Roboto,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  padding: 0;
+  padding-bottom: 4px;
+  font-size: 16px;
+  margin-left: 5px;
+}
+#redo-btn{
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  font-family: Roboto,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 5px;
+  padding: 1px;
+}
+#input-container{
+  grid-row: 3/4;
+  margin: 0 auto;
+  width: 90%;
+  height: 70%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 7px;
+  padding: 5px;
+  font-size: 14px;
+}
+#input{
+  padding: 10px;
+  font-size: 17px;
+  font-family: Roboto,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+}
+#add-btn{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  font-size: 20px;
+}
+#add-btn:hover{
+  background: #45779E;
+}
+#add-btn:active{
+  background: white;
+}
+#del-btn:hover{
+  background: rgb(167, 167, 167);
+}
+#del-btn:active{
+  background: white;
+}
+#done-btn:hover{
+  background: #6ccc65;
+}
+#done-btn:active{
+  background: white;
+}
+#add-btn-container{
+  display: grid;
+  align-content: center;
+}
+#redo-btn:hover{
+  background: #bac653;
+}
+#redo-btn:active{
+  background: white;
+}
+.archive-container{
+  background: #E5C24F;
+  width: 350px;
+  height: 500px;
+  grid-area: a;
+  display: grid;
+  grid-template-rows: repeat(2,auto);
+  border-radius: 5%;
+}
+#archive-list{
+  padding: 10px;
+  margin: 0;
+  overflow-y: scroll;
+  height: 400px;
+  scrollbar-color: #fff rgb(54, 54, 54);
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+}
+#archive-title{
+  grid-row: 1/2;
+  margin: auto auto;
+  font-family: Roboto,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  color:white;
+}
+#archive-content-container{
+  background: #4a564d;
+  border-radius: 5% 0 0 5%;
+  grid-row: 2/3;
+  width: 90%;
+  height: 420px;
+  margin: 0 auto;
+  border: solid white 1px;
+}
+@font-face {
+  font-family: 'chalk';
+  src: url('./fonts/chalkFont.ttf');
+}
+@font-face {
+  font-family: 'ccryon';
+  src: url('./fonts/coloredCryon.ttf');
+}
+@font-face {
+  font-family: 'eraserDust';
+  src: url('./fonts/EraserDust.ttf');
+}
+@font-face {
+  font-family: 'eraserReg';
+  src: url('./fonts/EraserReg.ttf');
 }
