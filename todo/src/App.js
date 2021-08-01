@@ -1,6 +1,34 @@
 import './App.css';
 
 function App() {
+  //buttons:
+  //creating delete and done button and edit
+  //done
+  let doneBtn = document.createElement("button");
+  doneBtn.setAttribute("id","done-btn");
+  doneBtn.appendChild(document.createTextNode("👍"));
+  //delete
+  let delBtn = document.createElement("button");
+  delBtn.setAttribute("id","del-btn");
+  delBtn.appendChild(document.createTextNode("❌"));
+  //edit
+  let editBtn = document.createElement("button");
+  editBtn.setAttribute("id","edit-btn");
+  editBtn.appendChild(document.createTextNode("edit"));
+  //re-do
+  let redoBtn = document.createElement("button"); //create
+  redoBtn.setAttribute("id","redo-btn"); //set id
+  redoBtn.appendChild(document.createTextNode("✏️")); //add text "redo"
+  //ok 
+  let ok = document.createElement("button");
+  ok.setAttribute("id"," ok-btn");
+  ok.appendChild(document.createTextNode("ok"));
+  //cancel 
+  let cancel = document.createElement("button");
+  cancel.setAttribute("id"," cancel-btn");
+  cancel.appendChild(document.createTextNode("cancel"));
+
+
   //appending childern in other places delets the child in its original place, which works fine and is needed in this project
   //that is why there was no need to clone the childern and appending the clone of them in the new place
   function add(){
@@ -9,7 +37,7 @@ function App() {
     //check empty input
     //here better condition (i.e. if input is only spaces) needed! / solution here using REGEX
     if(input.value === undefined || !input.value.replace(/\s/g, '').length){
-        alert("enter text first!");
+        alert("enter text first!\nempty field not allowed!");
     }else{ //else needed to prevent adding empty strings
       //adding input to ol
       //creating new li
@@ -24,19 +52,6 @@ function App() {
       //getting ol
       let todoList = document.getElementById("todo-list")
       todoList.appendChild(item);
-      //creating delete and done button and edit
-      //done
-      let doneBtn = document.createElement("button");
-      doneBtn.setAttribute("id","done-btn");
-      doneBtn.appendChild(document.createTextNode("👍"));
-      //delete
-      let delBtn = document.createElement("button");
-      delBtn.setAttribute("id","del-btn");
-      delBtn.appendChild(document.createTextNode("❌"));
-      //edit
-      let editBtn = document.createElement("button");
-      editBtn.setAttribute("id","edit-btn");
-      editBtn.appendChild(document.createTextNode("edit"));
       //add buttons to item li
       item.appendChild(doneBtn);
       item.appendChild(editBtn);
@@ -47,11 +62,10 @@ function App() {
       editBtn.onclick = function(){edit(item)};
       //clear input field
       input.value = "";
-      
     }
   }
   function del(item){
-    if(item.parentNode !== document.getElementById("archive-list") && toDel){
+    if(item.parentNode !== document.getElementById("archive-list")){
       addArchive(item); //!!! else helped by adding to archive cause without else it would also delete the item after adding it to archive.
       //i expected that the item will not get deleted from todo after getting added to archive but the way appendChild() works (look at explaination at beginning ) saved the functionality
       //adding red color as sign for deleted before doing it
@@ -60,14 +74,27 @@ function App() {
       item.parentNode.removeChild(item);
     }
   }
-  let toDel = true; //without this, the element will be added to archive after pressing on "edit"
+  let recoverInputValue; //to recover input for cancel button
   function edit(item){
-    toDel = false;
-    let inputToEdit = item.children[0];
-    del(item);
-    let input = document.getElementById("input");
-    input.value = inputToEdit.innerHTML;
-    toDel = true; //set back to true to keep del() working right
+    let oldInputValue = item.children[0].innerHTML;
+    let newInput = document.createElement("input");
+    newInput.setAttribute("type","text");
+    newInput.setAttribute("id","new-input"); //for styling
+    newInput.setAttribute("value",oldInputValue);
+    //deleting buttons to add cancel and ok button
+    item.removeChild(item.children[0]);//text
+    item.removeChild(item.children[0]);//done
+    item.removeChild(item.children[0]);//edit
+    item.removeChild(item.children[0]);//delete
+    //adding newInput to item
+    item.appendChild(newInput);
+    //adding ok and cancel buttons
+    item.appendChild(ok);
+    item.appendChild(cancel);
+    //set onclick
+    ok.onclick = function(){okFunction(item)};
+    cancel.onclick = function(){cancelFunction(item)};
+    recoverInputValue = item.children[0].value;
   }
   function readd(item){
     let todoList = document.getElementById("todo-list")
@@ -76,23 +103,14 @@ function App() {
     item.removeChild(item.children[1]);
     item.removeChild(item.children[1]);
     item.setAttribute("style","background-color:none;"); //deleting background color 
-    //create new buttons
-    //add done btn
-    let doneBtn = document.createElement("button"); //create
-    doneBtn.setAttribute("id","done-btn");
-    doneBtn.appendChild(document.createTextNode("👍"));
+    //adding new buttons
+    //done
     doneBtn.onclick = function(){addArchive(item)}; // set onclick
     item.appendChild(doneBtn); // add to parent (item)
     //add edit btn
-    let editBtn = document.createElement("button"); //create
-    editBtn.setAttribute("id","edit-btn");
-    editBtn.appendChild(document.createTextNode("edit"));
     editBtn.onclick = function(){edit(item)}; // set onclick
     item.appendChild(editBtn); // add to parent (item)
     //add del btn
-    let delBtn = document.createElement("button");
-    delBtn.setAttribute("id","del-btn");
-    delBtn.appendChild(document.createTextNode("❌"));
     delBtn.onclick = function(){del(item)};
     item.appendChild(delBtn);
   }
@@ -108,20 +126,57 @@ function App() {
     item.removeChild(item.children[1]);
     item.removeChild(item.children[1]);
     item.removeChild(item.children[1]);
-    //make new buttons.....
-    //add redo btn
-    let redoBtn = document.createElement("button"); //create
-    redoBtn.setAttribute("id","redo-btn"); //set id
-    redoBtn.appendChild(document.createTextNode("✏️")); //add text "redo"
+    //add new buttons.....
+    //redo btn
     redoBtn.onclick = function(){readd(item)}; // set onclick
     item.appendChild(redoBtn); // add to parent (item)
-    //add del btn
-    let delBtn = document.createElement("button");
-    delBtn.setAttribute("id","del-btn");
-    delBtn.appendChild(document.createTextNode("❌"));
+    //del btn
     delBtn.onclick = function(){del(item)};
-    //add button to item li
+    item.appendChild(delBtn); //add button to paren (item)
+  }
+  function okFunction(item){
+    let newText = document.createElement("p"); //create new text from the new input
+    newText.setAttribute("id","text");
+    newText.appendChild(document.createTextNode(item.children[0].value));
+    if(newText.innerHTML === undefined || !newText.innerHTML.replace(/\s/g, '').length){
+      alert("enter text first!\nempty field not allowed!");
+    }
+    else{
+      //add text to item
+      item.appendChild(newText);
+      //deleting children
+      item.removeChild(item.children[0]); //deleting the input field
+      item.removeChild(item.children[0]); //deleting ok
+      item.removeChild(item.children[0]); //deleting cancel
+      //adding buttons (which appears usually on todo list) back
+      item.appendChild(doneBtn);
+      item.appendChild(editBtn);
+      item.appendChild(delBtn);
+      //setting onclick again
+      delBtn.onclick = function(){del(item)};
+      doneBtn.onclick = function(){addArchive(item)};
+      editBtn.onclick = function(){edit(item)};
+    }
+
+  }
+  function cancelFunction(item){
+    //deleting input and buttons
+    item.removeChild(item.children[0])
+    item.removeChild(item.children[0])
+    item.removeChild(item.children[0])
+    //making text to have recoverd input-value
+    let recoverText = document.createElement("p");
+    recoverText.setAttribute("id","recoverd-text");
+    recoverText.appendChild(document.createTextNode(recoverInputValue));
+    //re-adding the old children
+    item.appendChild(recoverText);
+    item.appendChild(doneBtn);
+    item.appendChild(editBtn);
     item.appendChild(delBtn);
+    //setting onclick again
+    delBtn.onclick = function(){del(item)};
+    doneBtn.onclick = function(){addArchive(item)};
+    editBtn.onclick = function(){edit(item)};
   }
 
   return (
