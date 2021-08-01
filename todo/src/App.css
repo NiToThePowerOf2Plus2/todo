@@ -131,6 +131,7 @@
   font-size: 16px;
   margin-left: 5px;
   padding-bottom: 2px;
+  padding-right: 1px;
 }
 #input-container{
   grid-row: 3/4;
