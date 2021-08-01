@@ -1,20 +1,120 @@
 import './App.css';
-import Board from "./components/Board"
-import Todo from "./components/Todo"
-import Archive from "./components/Archive"
 
 function App() {
+
+  //appending childern in other places delets the child in its original place, which works fine and is needed in this project
+  //that is why there was no need to clone the childern and appending the clone of them in the new place
+  function add(){
+    //did not work as class but only as id....!!!
+    let input = document.getElementById("input");
+    //check empty input
+    //here better condition (i.e. if input is only spaces) needed! / solution here using REGEX
+    if(input.value === undefined || !input.value.replace(/\s/g, '').length){
+        alert("enter text first!");
+    }else{ //else needed to prevent adding empty strings
+      //adding input to ol
+      //creating new li
+      let item = document.createElement("li");
+      item.setAttribute("class","item");
+      item.appendChild(document.createTextNode(input.value));
+      //getting ol
+      let todoList = document.getElementById("todo-list")
+      todoList.appendChild(item);
+      //creating delete and done button
+      //done
+      let doneBtn = document.createElement("button");
+      doneBtn.setAttribute("id","done-btn");
+      doneBtn.appendChild(document.createTextNode("done"));
+      //delete
+      let delBtn = document.createElement("button");
+      delBtn.setAttribute("id","del-btn");
+      delBtn.appendChild(document.createTextNode("delete"));
+      //add buttons to item li
+      item.appendChild(doneBtn);
+      item.appendChild(delBtn);
+      //setting onclick
+      delBtn.onclick = function(){del(item)};
+      doneBtn.onclick = function(){addArchive(item)};
+      //clear input field
+      input.value = "";
+    }
+  }
+  function del(item){
+    if(item.parentNode !== document.getElementById("archive-list")){
+      addArchive(item); //!!! else helped by adding to archive cause without else it would also delete the item after adding it to archive.
+      //i expected that the item will not get deleted from todo after getting added to archive but the way appendChild() works (look at explaination at beginning ) saved the functionality
+      console.log("deleted item!")
+    }else{
+      item.parentNode.removeChild(item);
+    }
+  }
+  function readd(item){
+    let todoList = document.getElementById("todo-list")
+    todoList.appendChild(item);
+    //delete old buttons
+    item.removeChild(item.children[0]);
+    item.removeChild(item.children[0]);
+    //create new buttons
+    //add done btn
+    let doneBtn = document.createElement("button"); //create
+    doneBtn.setAttribute("id","done-btn");
+    doneBtn.appendChild(document.createTextNode("done"));
+    doneBtn.onclick = function(){addArchive(item)}; // set onclick
+    item.appendChild(doneBtn); // add to parent (item)
+    //add del btn
+    let delBtn = document.createElement("button");
+    delBtn.setAttribute("id","del-btn");
+    delBtn.appendChild(document.createTextNode("delete"));
+    delBtn.onclick = function(){del(item)};
+    //add button to item li
+    item.appendChild(delBtn);
+  }
+  function addArchive(item){
+    //adding item to ol
+    //getting ol
+    let archList = document.getElementById("archive-list")
+    archList.appendChild(item);
+    //delete all buttons to add new ones
+    //written two times cause second button will become at first postition after deleting the first button. 
+    item.removeChild(item.children[0]);
+    item.removeChild(item.children[0]);
+    //make new buttons.....
+    //add redo btn
+    let redoBtn = document.createElement("button"); //create
+    redoBtn.setAttribute("id","redo-btn"); //set id
+    redoBtn.appendChild(document.createTextNode("redo")); //add text "redo"
+    redoBtn.onclick = function(){readd(item)}; // set onclick
+    item.appendChild(redoBtn); // add to parent (item)
+    //add del btn
+    let delBtn = document.createElement("button");
+    delBtn.setAttribute("id","del-btn");
+    delBtn.appendChild(document.createTextNode("delete"));
+    delBtn.onclick = function(){del(item)};
+    //add button to item li
+    item.appendChild(delBtn);
+  }
   return (
     <div className="main-container">
-      <div className="board-container">
-        <Board />
-      </div>
+      
+      {/* //=======================TODO=============================== */}
       <div className="todo-container">
-        <Todo />
+        <h1 id="todo-title">TODO</h1>
+        <div id="todo-content-container">
+          <ol id="todo-list"></ol>
+        </div>
+        <div id="input-container">
+            <input id="input" type="text" placeholder="what to do🤔"></input>
+            <button id="add-btn" type="button" onClick={add}>add</button>
+        </div>
       </div>
+      {/* //========================ARCHIVE============================== */}
       <div className="archive-container">
-        <Archive />
+        <h1 id="archive-title">ARCHIVE</h1>
+        <div id="archive-content-container">
+          <ol id="archive-list"></ol>
+        </div>
       </div>
+      {/* //====================================================== */}
     </div>
   );
 }
