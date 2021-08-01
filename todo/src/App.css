@@ -21,7 +21,7 @@
 }
 #todo-content-container{
   background: #4a564d;
-  border-radius: 5% 0 0 5%;
+  border-radius: 5% 0 0 0;
   grid-row: 2/3;
   width: 90%;
   height: 350px;
@@ -38,8 +38,19 @@
 #todo-list{
   padding: 10px;
   margin: 0;
-  overflow-y: scroll;
+  overflow: scroll;
   height: 330px;
+  width: 295px;
+  scrollbar-color: #fff rgb(54, 54, 54);
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+}
+#archive-list{
+  padding: 10px;
+  margin: 0;
+  overflow: scroll;
+  height: 400px;
+  width: 295px;
   scrollbar-color: #fff rgb(54, 54, 54);
   scrollbar-width: thin;
   scroll-behavior: smooth;
@@ -146,15 +157,7 @@
   grid-template-rows: repeat(2,auto);
   border-radius: 5%;
 }
-#archive-list{
-  padding: 10px;
-  margin: 0;
-  overflow-y: scroll;
-  height: 400px;
-  scrollbar-color: #fff rgb(54, 54, 54);
-  scrollbar-width: thin;
-  scroll-behavior: smooth;
-}
+
 #archive-title{
   grid-row: 1/2;
   margin: auto auto;
@@ -164,7 +167,7 @@
 }
 #archive-content-container{
   background: #4a564d;
-  border-radius: 5% 0 0 5%;
+  border-radius: 5% 0 0 0;
   grid-row: 2/3;
   width: 90%;
   height: 420px;
