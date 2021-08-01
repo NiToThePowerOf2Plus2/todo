@@ -1,33 +1,17 @@
 import './App.css';
 
 function App() {
-  //buttons:
-  //creating delete and done button and edit
-  //done
-  let doneBtn = document.createElement("button");
-  doneBtn.setAttribute("id","done-btn");
-  doneBtn.appendChild(document.createTextNode("👍"));
-  //delete
-  let delBtn = document.createElement("button");
-  delBtn.setAttribute("id","del-btn");
-  delBtn.appendChild(document.createTextNode("❌"));
-  //edit
-  let editBtn = document.createElement("button");
-  editBtn.setAttribute("id","edit-btn");
-  editBtn.appendChild(document.createTextNode("edit"));
-  //re-do
-  let redoBtn = document.createElement("button"); //create
-  redoBtn.setAttribute("id","redo-btn"); //set id
-  redoBtn.appendChild(document.createTextNode("✏️")); //add text "redo"
-  //ok 
-  let ok = document.createElement("button");
-  ok.setAttribute("id"," ok-btn");
-  ok.appendChild(document.createTextNode("ok"));
-  //cancel 
-  let cancel = document.createElement("button");
-  cancel.setAttribute("id"," cancel-btn");
-  cancel.appendChild(document.createTextNode("cancel"));
 
+  //using global buttons did not work, cause buttons in this way can be used only once sence there are created html elements
+
+  //buttons emoji
+  const ok_e = "✔️";
+  const cancel_e = "❌"; 
+  const add_e = "➕";
+  const del_e = "🗑️"; //💣
+  const done_e = "👍🏻"; //👍
+  const edit_e = "✏️"; //🖋
+  const redo_e = "📝";
 
   //appending childern in other places delets the child in its original place, which works fine and is needed in this project
   //that is why there was no need to clone the childern and appending the clone of them in the new place
@@ -52,6 +36,19 @@ function App() {
       //getting ol
       let todoList = document.getElementById("todo-list")
       todoList.appendChild(item);
+      //making buttons
+      //done
+      let doneBtn = document.createElement("button");
+      doneBtn.setAttribute("id","done-btn");
+      doneBtn.appendChild(document.createTextNode(done_e));
+      //edit
+      let editBtn = document.createElement("button");
+      editBtn.setAttribute("id","edit-btn");
+      editBtn.appendChild(document.createTextNode(edit_e));
+      //delete
+      let delBtn = document.createElement("button");
+      delBtn.setAttribute("id","del-btn");
+      delBtn.appendChild(document.createTextNode(del_e));
       //add buttons to item li
       item.appendChild(doneBtn);
       item.appendChild(editBtn);
@@ -88,6 +85,15 @@ function App() {
     item.removeChild(item.children[0]);//delete
     //adding newInput to item
     item.appendChild(newInput);
+    //making buttons
+    //ok 
+    let ok = document.createElement("button");
+    ok.setAttribute("id"," ok-btn");
+    ok.appendChild(document.createTextNode(ok_e));
+    //cancel 
+    let cancel = document.createElement("button");
+    cancel.setAttribute("id"," cancel-btn");
+    cancel.appendChild(document.createTextNode(cancel_e));
     //adding ok and cancel buttons
     item.appendChild(ok);
     item.appendChild(cancel);
@@ -103,6 +109,19 @@ function App() {
     item.removeChild(item.children[1]);
     item.removeChild(item.children[1]);
     item.setAttribute("style","background-color:none;"); //deleting background color 
+    //making buttons
+    //done
+    let doneBtn = document.createElement("button");
+    doneBtn.setAttribute("id","done-btn");
+    doneBtn.appendChild(document.createTextNode(done_e));
+    //edit
+    let editBtn = document.createElement("button");
+    editBtn.setAttribute("id","edit-btn");
+    editBtn.appendChild(document.createTextNode(edit_e));
+    //delete
+    let delBtn = document.createElement("button");
+    delBtn.setAttribute("id","del-btn");
+    delBtn.appendChild(document.createTextNode(del_e));
     //adding new buttons
     //done
     doneBtn.onclick = function(){addArchive(item)}; // set onclick
@@ -126,7 +145,16 @@ function App() {
     item.removeChild(item.children[1]);
     item.removeChild(item.children[1]);
     item.removeChild(item.children[1]);
-    //add new buttons.....
+    //making new buttons
+    //re-do
+    let redoBtn = document.createElement("button"); //create
+    redoBtn.setAttribute("id","redo-btn"); //set id
+    redoBtn.appendChild(document.createTextNode(redo_e)); //add text "redo"
+    //delete
+    let delBtn = document.createElement("button");
+    delBtn.setAttribute("id","del-btn");
+    delBtn.appendChild(document.createTextNode(del_e));
+    //add new buttons
     //redo btn
     redoBtn.onclick = function(){readd(item)}; // set onclick
     item.appendChild(redoBtn); // add to parent (item)
@@ -148,6 +176,19 @@ function App() {
       item.removeChild(item.children[0]); //deleting the input field
       item.removeChild(item.children[0]); //deleting ok
       item.removeChild(item.children[0]); //deleting cancel
+      //making buttons
+      //done
+      let doneBtn = document.createElement("button");
+      doneBtn.setAttribute("id","done-btn");
+      doneBtn.appendChild(document.createTextNode(done_e));
+      //edit
+      let editBtn = document.createElement("button");
+      editBtn.setAttribute("id","edit-btn");
+      editBtn.appendChild(document.createTextNode(edit_e));
+      //delete
+      let delBtn = document.createElement("button");
+      delBtn.setAttribute("id","del-btn");
+      delBtn.appendChild(document.createTextNode(del_e));
       //adding buttons (which appears usually on todo list) back
       item.appendChild(doneBtn);
       item.appendChild(editBtn);
@@ -168,6 +209,19 @@ function App() {
     let recoverText = document.createElement("p");
     recoverText.setAttribute("id","recoverd-text");
     recoverText.appendChild(document.createTextNode(recoverInputValue));
+    //making buttons
+    //done
+    let doneBtn = document.createElement("button");
+    doneBtn.setAttribute("id","done-btn");
+    doneBtn.appendChild(document.createTextNode(done_e));
+    //edit
+    let editBtn = document.createElement("button");
+    editBtn.setAttribute("id","edit-btn");
+    editBtn.appendChild(document.createTextNode(edit_e));
+    //delete
+    let delBtn = document.createElement("button");
+    delBtn.setAttribute("id","del-btn");
+    delBtn.appendChild(document.createTextNode(del_e));
     //re-adding the old children
     item.appendChild(recoverText);
     item.appendChild(doneBtn);
@@ -188,9 +242,9 @@ function App() {
           <ol id="todo-list"></ol>
         </div>
         <div id="input-container">
-            <input id="input" type="text" placeholder="what to do🤔"></input>
+            <input id="input" type="text" placeholder="what to do🤔!"></input>
             <div id="add-btn-container">
-              <button id="add-btn" type="button" onClick={add}>➕</button>
+              <button id="add-btn" type="button" onClick={add}>{add_e}</button>
             </div>
         </div>
       </div>
